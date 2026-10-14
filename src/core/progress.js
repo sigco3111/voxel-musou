@@ -32,10 +32,10 @@ export const cleared = (stage) => best(stage)?.rank;
 // open. zh / en: the result screen's line when it opens; rule: [zh, en] shown on the locked thing.
 const onHard = (R) => Object.values(R).some((s) => Object.values(s).some((c) => c.hard || c.chaos));
 export const UNLOCKS = [
-  { id: 'chaos', zh: '修羅難度', en: 'Chaos difficulty', rule: ['以上級攻克任一戰場後解鎖', 'Clear any battle on Hard to unlock'], open: onHard },
-  { id: 'lubu', zh: '武將「呂布」', en: 'Officer Lü Bu', rule: ['攻克第一章「虎牢關」後解鎖', 'Clear Chapter I · Hulao Gate to unlock'], open: (R) => !!R.hulao },
-  { id: 'hold', zh: '試煉「死守」', en: 'Trial · Hold the Bridge', rule: ['攻克第二章「長坂坡」後解鎖', 'Clear Chapter II · Changban to unlock'], open: (R) => !!R.changban },
-  { id: 'gauntlet', zh: '試煉「過關斬將」', en: 'Trial · The Gauntlet', rule: ['攻克第四章「定軍山」後解鎖', 'Clear Chapter IV · Mount Dingjun to unlock'], open: (R) => !!R.dingjun },
+  { id: 'chaos', zh: '수라 난이도', en: 'Chaos difficulty', rule: ['어려움으로 캠페인 또는 시련을 완료하면 해제', 'Clear any battle on Hard to unlock'], open: onHard },
+  { id: 'lubu', zh: '장수 여포', en: 'Officer Lü Bu', rule: ['제1장 호로관 완료 후 해제', 'Clear Chapter I · Hulao Gate to unlock'], open: (R) => !!R.hulao },
+  { id: 'hold', zh: '시련 사수', en: 'Trial · Hold the Bridge', rule: ['제2장 장판파 완료 후 해제', 'Clear Chapter II · Changban to unlock'], open: (R) => !!R.changban },
+  { id: 'gauntlet', zh: '시련 연속 결투', en: 'Trial · The Gauntlet', rule: ['제4장 정군산 완료 후 해제', 'Clear Chapter IV · Mount Dingjun to unlock'], open: (R) => !!R.dingjun },
 ];
 /** The UNLOCKS entry still keeping `id` shut (its rule is what to show), or null when it is open. */
 export function locked(id) {
