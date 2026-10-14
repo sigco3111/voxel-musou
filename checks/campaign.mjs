@@ -42,7 +42,7 @@ if (process.argv.includes('--defense') || process.argv.includes('--altar')) {
         game.musou = game.hero.kit.createMusou(game); game.musou.reset();
         game.story = createStory(game); game.story.reset({ mode: 'story', char, ch: C.CH.id });
         on('story:end', (e) => { end = e; });
-        on('story:objective', (e) => { if (e.zh.includes('接應趙雲')) passed = true; });
+        on('story:objective', (e) => { if (e.zh.includes('조운 지원')) passed = true; });
         on('story:set', (e) => { if (altar && e.id === 'wind') passed = true; });
         return game.actors;
       });
@@ -157,10 +157,10 @@ for (const C of CHAPTERS) for (const char of C.CH.heroes) {
   const s = run(C.CH.id, char);
   if (C.CH.id === 'hulao') {
     assert.equal(s.actors.filter((a) => a.role === 'ally').length, 2, `the other two brothers must join ${char}`);
-    if (char === 'guanyu') assert(s.banners.some((b) => b.includes('溫酒斬華雄')), 'warm-wine branch must fire');
+    if (char === 'guanyu') assert(s.banners.some((b) => b.includes('술이 식기 전에 화웅을 베다')), 'warm-wine branch must fire');
   }
   if (C.CH.id === 'changban') {
-    assert(s.objectives.some((o) => o.zh.includes(char === 'zhaoyun' ? '懷抱阿斗' : '護送趙雲')));
+    assert(s.objectives.some((o) => o.zh.includes(char === 'zhaoyun' ? '아두를 품에 안고' : '조운을 호위')));
     if (char === 'zhangfei') assert(s.sets.includes('bridge'), 'bridge must break after victory');
   }
   if (C.CH.id === 'chibi') assert.deepEqual(s.sets, ['wind', 'ignite', 'forest']);
@@ -168,8 +168,8 @@ for (const C of CHAPTERS) for (const char of C.CH.heroes) {
   console.log(`PASS ${C.CH.id}/${char} win and branch events`);
 }
 const cold = run('hulao', 'guanyu', { coldWine: true });
-assert(!cold.banners.some((b) => b.includes('溫酒斬華雄')));
-assert(cold.lines.some((l) => l.includes('酒已涼了')));
+assert(!cold.banners.some((b) => b.includes('술이 식기 전에 화웅을 베다')));
+assert(cold.lines.some((l) => l.includes('술이 식었소')));
 console.log('PASS guanyu cold wine remains winnable');
 
 // Changing to and from the spy objective must keep the original 120-second altar countdown.
@@ -177,7 +177,7 @@ for (const char of ['zhugeliang', 'zhaoyun']) {
   const f = fixture('chibi', char);
   try {
     for (let i = 0; i < 75 * 60; i++) step(f);
-    assert(f.seen.objectives.some((o) => o.zh.includes('蔡和')));
+    assert(f.seen.objectives.some((o) => o.zh.includes('채화')));
     assert(f.story.timer >= 45 && f.story.timer <= 46, `${char}: timer reset/lost at spy objective`);
     assert.deepEqual(f.story.target, { x: -6, z: -175 });
     assert(world.walkIn(f.story.target.x, f.story.target.z) > 0.5, 'altar guard objective must be walkable');
@@ -198,7 +198,7 @@ for (const [ch, char] of [['changban', 'zhangfei'], ['chibi', 'zhugeliang']]) {
     for (let i = 0; i < c.N; i++) { c.x[i] = D.x; c.z[i] = D.z; c.st[i] = 1; }
     for (let i = 0; i < 300 && !f.seen.end; i++) step(f, false, false);
     assert.equal(f.seen.end?.win, false, `${ch}: point loss must end the battle`);
-    assert(f.seen.end.reason?.zh.includes('失守'));
+    assert(f.seen.end.reason?.zh.includes('함락'));
   } finally { f.off(); }
 }
 const fallen = fixture('hulao', 'liubei');
