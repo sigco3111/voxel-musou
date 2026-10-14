@@ -33,7 +33,7 @@ const boat = (z) => [shore(z) - 1.5, z];                                        
 
 export default {
   id: 'chibi',
-  name: { zh: '赤壁', en: 'Red Cliffs' },
+  name: { zh: '적벽', en: 'Red Cliffs' },
   grid: [-130, -228, 214, 230],
   pieces: [
     { id: 'altar', ell: [-6, -166, 30, 22], h: ALTAR_H, edge: 2, drop: 0 },                      // a mesa: rim, then the fall-away
@@ -51,16 +51,16 @@ export default {
   props: [[-15, -169, 3, -151], [-44, -53, 5, -44], [-8.6, -171.6, -3.4, -148.4], [-10.5, 25.5, 2.5, 34.5], [-20.5, 124.5, -3.5, 135.5],
     ...[-112, -96, -80].map((z) => [boat(z)[0] - 5.5, z - 1.8, boat(z)[0] + 4, z + 1.8])],
   zones: [
-    { id: 'nanping', name: { zh: '七星壇', en: 'Altar of the Seven Stars' }, x: -6, z: -166, r: 28 },
-    { id: 'beach', name: { zh: '江岸', en: 'Riverbank Landing' }, x: 12, z: -91, w: 100, d: 78 },
-    { id: 'shuizhai', name: { zh: '曹軍水寨', en: 'Cao Water Camp' }, x: 20, z: 8, w: 92, d: 100 },
-    { id: 'wulin', name: { zh: '烏林', en: 'Wulin' }, x: -6, z: 102, w: 80, d: 88 },
-    { id: 'huarong', name: { zh: '華容道', en: 'Huarong Road' }, x: -30, z: 174, w: 44, d: 52 },
+    { id: 'nanping', name: { zh: '칠성단', en: 'Altar of the Seven Stars' }, x: -6, z: -166, r: 28 },
+    { id: 'beach', name: { zh: '강기슭', en: 'Riverbank Landing' }, x: 12, z: -91, w: 100, d: 78 },
+    { id: 'shuizhai', name: { zh: '조조군 수상 진영', en: 'Cao Water Camp' }, x: 20, z: 8, w: 92, d: 100 },
+    { id: 'wulin', name: { zh: '오림', en: 'Wulin' }, x: -6, z: 102, w: 80, d: 88 },
+    { id: 'huarong', name: { zh: '화용도', en: 'Huarong Road' }, x: -30, z: 174, w: 44, d: 52 },
   ],
   route: [[4, -182], [13, -166], [13, -150], [21, -139], [26, -128], [24, -104], [20, -76], [22, -54], [22, -42], [18, -14],
     [10, 22], [2, 58], [-6, 92], [-10, 116], [-14, 140], [-24, 160], [-34, 180], [-44, 200]],
   gates: {
-    shuizhai: { rect: [13, -43.5, 31, -40.5], name: { zh: '水寨門', en: 'Water Camp Gate' }, kind: 'barricade', at: [22, -42, 0, 8] },
+    shuizhai: { rect: [13, -43.5, 31, -40.5], name: { zh: '수상 진영 문', en: 'Water Camp Gate' }, kind: 'barricade', at: [22, -42, 0, 8] },
   },
   anchors: { altar: ALTAR, gate: GATE, boat: boat(-96), tent: TENT, mouth: [-24, 160], road: [-44, 200] },
   // story: on the mesa south of the altar, looking up the river past it; free: the beach
@@ -355,10 +355,10 @@ function buildSet(root, k) {
     x += w;
   }
   for (const [x, w, h] of [[-42, 6, 15], [3.5, 5, 12], [-37, 5, 26], [-2, 4, 25]]) k.props.push({ s: [w, h, 9], p: [x, h / 2 - 0.8, -48.4], c: k.shade(0x86301c, r.range(0.8, 1.0)) });
-  { const cv = glyphPlane('赤壁', 8, 16, '#c8341c');
+  { const cv = glyphPlane('적벽', 8, 16, '#c8341c');
     cv.position.set(-19, 11.5, -53.25); cv.rotation.y = Math.PI;
     root.add(cv); }
-  { const sg = glyphPlane('華容道', 0.9, 2.6, '#1a1008', 0.72);                                        // the road sign
+  { const sg = glyphPlane('화용도', 0.9, 2.6, '#1a1008', 0.72);                                        // the road sign
     const x = -18.6, z = 156, gy = k.ground(x, z);
     k.props.push({ s: [0.18, 3.6, 0.18], p: [x, gy + 1.8, z + 0.1], c: 0x3a2818 }, { s: [1.1, 2.9, 0.12], p: [x, gy + 2.2, z + 0.05], c: 0x8a7a5a });
     sg.position.set(x, gy + 2.2, z - 0.03); sg.rotation.y = Math.PI; root.add(sg); }
@@ -601,4 +601,4 @@ function tree(out, x, gy, z, g, r) {
     const w = r.range(1.8, 3.2);
     out.push({ s: [w, w * 0.8, w], p: [x + r.range(-1.3, 1.3), gy + H * r.range(0.62, 0.95), z + r.range(-1.3, 1.3)], r: [0, r.range(0, 3), 0], c: shade(0x26301e, r.range(0.75, 1.05)), b: b + 1 });
   }
-}
+      }
