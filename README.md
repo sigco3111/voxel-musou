@@ -2,6 +2,8 @@
 
 삼국지 장수로 수백 명의 병사를 상대하는 브라우저 복셀 액션 게임입니다. [mike007jd/voxel-musou](https://github.com/mike007jd/voxel-musou)의 한국어 포크이며, 최신 원본은 **장수 7명, 이야기 4장, 시련 3개, 난이도 4단계**를 제공합니다.
 
+**[한국어판 플레이](https://sigco3111.github.io/voxel-musou/)**
+
 ![원작 소개 영상](media/promo.gif)
 
 ## 한국어판 변경 사항
