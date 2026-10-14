@@ -34,7 +34,7 @@ const WALLS = [[-42, 60, -27, 60.7], [-12.6, 62, -11.9, 75], [26, 60, 38, 60.7],
 
 export default {
   id: 'changban',
-  name: { zh: '長坂坡', en: 'Changban' },
+  name: { zh: '장판파', en: 'Changban' },
   grid: [-112, -206, 112, 232],
   pieces: [
     { id: 'south', rect: [-34, -176, 34, -126], h: 0, edge: 3, rise: 6 },
@@ -48,16 +48,16 @@ export default {
   // farmhouse ruins, the well with its wall, 曹操's dais on 景山
   props: [...HOUSES.map(foot), [WELL[0] - 1.4, WELL[1] - 2.4, WELL[0] + 2.6, WELL[1] + 2.4], [-5, 170, 5, 177]],
   zones: [
-    { id: 'grove', name: { zh: '長坂橋南', en: 'South of the Bridge' }, x: 0, z: -155, w: 64, d: 42 },
-    { id: 'bridge', name: { zh: '長坂橋', en: 'Changban Bridge' }, x: 0, z: -115, w: 80, d: 30 },
-    { id: 'slopes', name: { zh: '長坂', en: 'Changban Slopes' }, x: 0, z: -40, w: 108, d: 120 },
-    { id: 'village', name: { zh: '當陽', en: 'Dangyang' }, x: 0, z: 58, w: 92, d: 76 },
-    { id: 'jingshan', name: { zh: '景山', en: 'Mount Jing' }, x: 0, z: 164, r: 30 },
+    { id: 'grove', name: { zh: '장판교 남쪽', en: 'South of the Bridge' }, x: 0, z: -155, w: 64, d: 42 },
+    { id: 'bridge', name: { zh: '장판교', en: 'Changban Bridge' }, x: 0, z: -115, w: 80, d: 30 },
+    { id: 'slopes', name: { zh: '장판', en: 'Changban Slopes' }, x: 0, z: -40, w: 108, d: 120 },
+    { id: 'village', name: { zh: '당양', en: 'Dangyang' }, x: 0, z: 58, w: 92, d: 76 },
+    { id: 'jingshan', name: { zh: '경산', en: 'Mount Jing' }, x: 0, z: 164, r: 30 },
   ],
   route: [[0, -168], [0, -140], [0, -128], [0, -114], [-6, -84], [4, -52], [-4, -20], [2, 10], [0, 30], [5, 55], [4, 80], [1, 97],
     [2, 124], [0, 148], [0, 164]],
   gates: {
-    jingshan: { rect: [-10, 121.5, 12, 124.5], name: { zh: '景山柵', en: 'Mount Jing Barricade' }, kind: 'barricade', at: [2, 123, 0, 9] },
+    jingshan: { rect: [-10, 121.5, 12, 124.5], name: { zh: '경산 방책', en: 'Mount Jing Barricade' }, kind: 'barricade', at: [2, 123, 0, 9] },
   },
   // bridge: the deck's middle · gan / mizhu: where 甘夫人 and 糜竺 are found · well · jingshan: 曹操's post
   anchors: { bridge: [0, RIVER_Z], gan: [-30, -52], mizhu: [28, -18], well: WELL, cao: [0, 168] },
