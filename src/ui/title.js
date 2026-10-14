@@ -105,7 +105,7 @@ export function createTitle(el, flow) {
     <div class="t-band">
       <div class="t-logo"><i class="t-seal">삼국</i><h1 data-t="무쌍"><span>무쌍</span></h1>
         <p class="t-en"><span>VOXEL MUSOU</span></p></div>
-      <div class="t-press"><b>아무 키나 눌러 시작</b><small><kbd>Enter</kbd> Press any key</small></div>
+      <div class="t-press"><b>키를 눌러 시작</b><small><kbd>Enter</kbd> Press any key</small></div>
       <nav class="t-menu t-main">${ITEMS.map((it, i) => `<button data-i="${i}" style="--i:${i}"><b>${it.zh}</b><small>${it.en}</small>${SWASH}</button>`).join('')}</nav>
       <div class="t-cpanel"><nav class="t-menu t-chs"></nav>
         <div class="t-ccard"><h3></h3><p class="t-cname"><b></b><i></i></p><p class="t-cera"></p><p class="t-cline"><b></b><small></small></p>
