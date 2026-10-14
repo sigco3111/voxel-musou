@@ -16,19 +16,19 @@ import { chapter } from '../story/chapters.js';
  *  field). */
 export function modeLabel(c) {
   const { CH } = chapter(c.ch);
-  return c.mode === 'free' ? [`自由演武「${CH.title.zh}」`, `Free battle · ${CH.title.en}`]
+  return c.mode === 'free' ? [`자유 전투「${CH.title.zh}」`, `Free battle · ${CH.title.en}`]
     : [`${CH.num.zh}「${CH.title.zh}」`, `${c.mode === 'story' ? 'Story' : 'Trial'} · ${CH.title.en}`];
 }
 // [zh, en, char id | undefined = any officer] — keep in step with the controls table (title.js CONTROLS)
 const TIPS = [
-  ['連按 J 打出完整連擊，連擊中按 K 接蓄力技。', 'Tap J for the full combo; press K mid-combo for a charge attack.'],
-  ['無雙槽滿時按 I，發動無雙亂舞。', 'When the gold gauge is full, press I to unleash your Musou.'],
-  ['按 L 或 Shift 閃避，翻滾瞬間刀槍不入。', 'L or Shift dodges; the roll slips through a blow.'],
-  ['按 R 視角回正，或鎖定最近的敵將。', 'R recenters the camera behind you, or onto the nearest officer.'],
-  ['點擊戰場以滑鼠轉動視角，Q / E 亦可轉動鏡頭。', 'Click the field to steer the camera with the mouse; Q / E turn it too.'],
-  ['長按 K 拉弓瞄準（站立或奔跑皆可），放開即射；滿弓可貫穿數人。',
+  ['J를 연타해 연속 공격, 도중에 K를 눌러 차지 공격을 이어가세요.', 'Tap J for the full combo; press K mid-combo for a charge attack.'],
+  ['금색 무쌍 게이지가 가득 차면 I로 무쌍난무를 펼치세요.', 'When the gold gauge is full, press I to unleash your Musou.'],
+  ['L 또는 Shift로 회피하세요. 구르는 순간에는 공격을 피할 수 있습니다.', 'L or Shift dodges; the roll slips through a blow.'],
+  ['R로 시점을 정면으로 돌리거나 가까운 적장에게 맞추세요.', 'R recenters the camera behind you, or onto the nearest officer.'],
+  ['전장을 클릭하면 마우스로 시점을 돌립니다. Q / E도 사용할 수 있습니다.', 'Click the field to steer the camera with the mouse; Q / E turn it too.'],
+  ['K를 길게 눌러 조준하고 놓으면 발사합니다. 완전히 당긴 화살은 여러 적을 관통합니다.',
     'Hold K / right click to draw and aim (standing or running); a full draw pierces a line.', 'huangzhong'],
-  ['爆頭：瞄準敵將頭部，傷害倍增。', 'Aim for an officer\'s head: a headshot hits far harder.', 'huangzhong'],
+  ['적장의 머리를 조준하면 더 큰 피해를 줄 수 있습니다.', 'Aim for an officer\'s head: a headshot hits far harder.', 'huangzhong'],
 ];
 
 export function createLoading(el) {
@@ -41,7 +41,7 @@ export function createLoading(el) {
       <p class="l-line"><b></b><small></small></p>
     </section>
     <footer class="l-foot">
-      <p class="l-tip"><span>心得</span><b></b><small></small></p>
+      <p class="l-tip"><span>도움말</span><b></b><small></small></p>
       <div class="l-prog"><p class="l-state"><b></b><small></small></p><div class="l-bar"><i></i></div></div>
     </footer>`;
   const $ = (s) => el.querySelector(s), bar = $('.l-bar i');
@@ -59,12 +59,12 @@ export function createLoading(el) {
       $('.l-line b').textContent = ch.lines.intro.zh; $('.l-line small').textContent = ch.lines.intro.en;
       const tips = TIPS.filter((t) => !t[2] || t[2] === ch.id), t = tips[Math.floor(Math.random() * tips.length)];   // UI only, not the sim
       $('.l-tip b').textContent = t[0]; $('.l-tip small').textContent = t[1];
-      state('出陣準備', 'Marshalling the army');           // first stage label; deploy() then climbs 點將 → 佈陣 → 整軍備戰
+      state('출전 준비', 'Marshalling the army');           // first stage label; deploy() then climbs 點將 → 佈陣 → 整軍備戰
       this.progress(0.06);
     },
     exit() {},
     /** p 0..1 plus the stage's label: real set-up stages (main.js deploy). */
     progress(p, zh, en) { bar.style.transform = `scaleX(${p})`; if (zh) state(zh, en); },
-    ready() { el.classList.add('ready'); state('出陣', 'To battle'); },
+    ready() { el.classList.add('ready'); state('출전', 'To battle'); },
   };
 }
