@@ -49,9 +49,9 @@ export function createPrologue(el, flow) {
       <div class="pl-pips"></div>
     </div>
     <i class="pl-rod l"></i><i class="pl-rod r"></i>
-    <div class="pl-skip"><span><kbd>Enter</kbd><kbd>Click</kbd>下一頁<small>Next</small></span>
-      <span><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15"/><circle class="p" cx="18" cy="18" r="15" pathLength="1"/></svg>長按跳過<small>Hold to skip</small></span>
-      <span><kbd>Esc</kbd>跳過<small>Skip</small></span></div>`;
+    <div class="pl-skip"><span><kbd>Enter</kbd><kbd>Click</kbd>다음 페이지<small>Next</small></span>
+      <span><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15"/><circle class="p" cx="18" cy="18" r="15" pathLength="1"/></svg>길게 눌러 건너뛰기<small>Hold to skip</small></span>
+      <span><kbd>Esc</kbd>건너뛰기<small>Skip</small></span></div>`;
   const $ = (s) => el.querySelector(s);
   const card = $('.pl-card'), cols = $('.pl-cols'), en = $('.pl-en'), pips = $('.pl-pips'), ring = $('.pl-skip .p');
   let ctx = {}, k = -1, timer = 0, swapT = 0, holdTimer = 0, holdT0 = 0, phase = 'off', stampAt = 0;
