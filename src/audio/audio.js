@@ -42,6 +42,7 @@ const BED = [0.16, 0.4], DRUMS = [0.06, 0.7], MUSIC = [0.18, 0.46];
 const SIDE = [0.3, 0.5, 0.45, 0.5], SIDE_MU = [0.25, 0.4, 0.55, 0.4];
 
 export function createAudio(game) {
+  let disabled = false, ready = false;
   let ctx = null, mix, post, ceiling, sfx, vox, bedBus, bedDuck, revIn, bedG, drumG, musicG, live = 0;
   let underBus, sides = [];                   // sfx that yield to impacts (whooshes, body falls) + the sidechain gains
                                               // (under bus, bed, voice, reverb return)
@@ -51,7 +52,7 @@ export function createAudio(game) {
   const last = new Map();                     // throttles
   const lastPick = new Map();
   const B = {};                               // filled progressively by the offline bake (combat sounds first)
-  buildBank(B).then(startBed, (e) => console.warn('audio bank', e));
+  buildBank(B).then(() => { try { startBed(); } catch (e) { disableAudio(e); } }).catch((e) => disableAudio(e));
   // the officer's own voice (kit.voice → bank.js bakeVoice): baked once per distinct voice, swapped into B at battle start
   const voices = new Map();
   let voiceKey = null;
@@ -66,7 +67,7 @@ export function createAudio(game) {
   on('scenario', useVoice);
 
   function start() {
-    if (ctx) { if (ctx.state !== 'running') ctx.resume(); return; }
+    if (ctx) { if (ctx.state !== 'running') ctx.resume().catch(disableAudio); return; }
     ctx = new AudioContext({ latencyHint: 'interactive' });
     const comp = ctx.createDynamicsCompressor();
     // 25 ms attack: the first frame of every hit passes the compressor untouched (6 ms flattened the impacts); a gentle
@@ -91,21 +92,33 @@ export function createAudio(game) {
     sides = SIDE.map(() => ctx.createGain());
     underBus = ctx.createGain(); underBus.connect(sides[0]).connect(sfx);
     vox = ctx.createGain(); vox.gain.value = VOX; vox.connect(sides[2]).connect(mix);
-    const rev = ctx.createConvolver(); rev.buffer = makeIR();
+    const rev = ctx.createConvolver(); rev.buffer = makeIR(ctx.sampleRate);
     revIn = ctx.createGain(); revIn.connect(rev); rev.connect(sides[3]).connect(mix);   // the wash ducks under hits too
     bedDuck = ctx.createGain(); bedDuck.connect(mix);
     bedBus = ctx.createGain(); bedBus.connect(sides[1]).connect(bedDuck);
     const bedSend = ctx.createGain(); bedSend.gain.value = 0.4; bedDuck.connect(bedSend).connect(revIn);
+    ready = true;
     startBed();
   }
-  addEventListener('pointerdown', start);
-  addEventListener('keydown', start);
+  function disableAudio(error) {
+    if (disabled) return;
+    disabled = true; ready = false;
+    console.warn('Audio unavailable; continuing silently', error);
+    const failedContext = ctx; ctx = null;
+    if (failedContext) Promise.resolve(failedContext.close()).catch(() => {});
+  }
+  function safeStart() {
+    if (disabled) return;
+    try { start(); } catch (error) { disableAudio(error); }
+  }
+  addEventListener('pointerdown', safeStart);
+  addEventListener('keydown', safeStart);
   // musou part r3: build the context + graph at boot (it stays 'suspended' until the first key/pointer gesture resumes
   // it). Building it inside the first keydown stalled that frame 0.2-1 s (the first Musou of a session hitched when I
   // was the first key pressed).
-  start();
+  safeStart();
 
-  const ok = () => ctx && ctx.state === 'running';
+  const ok = () => !disabled && ready && ctx && ctx.state === 'running';
   /** One-shot buffer → gain → pan → bus (+ reverb send). */
   function play(buf, { gain = 1, rate = 1, pan = 0, delay = 0, send = 0.12, bus = sfx, prio = 0 } = {}) {
     if (!buf || (live > 56 && prio < 1)) return null;
@@ -152,7 +165,7 @@ export function createAudio(game) {
     ramp(bedDuck.gain, [[0.015, depth]]); bedDuck.gain.setTargetAtTime(1, ctx.currentTime + 0.015 + hold, rel);
   }
   function startBed() {
-    if (bedOn || !ctx || !B.bed) return;
+    if (disabled || !ready || bedOn || !ctx || !bedBus || !B.bed) return;
     bedOn = true;
     const t0 = ctx.currentTime + 0.03;
     const loop = (buf) => {                     // starts silent; frame() fades it to the intensity-driven level
@@ -412,7 +425,7 @@ export function createAudio(game) {
     play(B.horn, { gain: 0.32, pan: pan * 0.6, send: 0.45 });
     play(B.roar, { gain: 0.4, pan: pan * 0.5, delay: 0.6, bus: vox, send: 0.4 });
   });
-  on('scenario', () => { if (ctx) { stopDrone(); undip(); } intensity = 0; seq = -1; mu = null; muFrame = -1; });
+  on('scenario', () => { if (ready && ctx) { stopDrone(); undip(); } intensity = 0; seq = -1; mu = null; muFrame = -1; });
 
   // ---- bow (Huang Zhong; events from src/combat/projectiles.js): every shot = a baked bowstring twang (bank.js) + a
   // string-slap click under a thin, bright thrust whoosh (the arrow leaving); heavy shots twang lower, fire arrows add a
@@ -440,4 +453,4 @@ export function createAudio(game) {
     play(pick(B.clank), { gain: 0.8, rate: rnd(1.25, 1.4), pan, send: 0.3, prio: 1 });
     if (B.ready) play(B.ready, { gain: 0.35, rate: 1.5, pan, send: 0.3 });
   });
-}
+    }
