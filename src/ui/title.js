@@ -18,7 +18,7 @@
 // each with the best rank won on it for that pick, + a card: the tier's line and 敵勢 / 敵將 / 傷害 pips; 修羅 shows its
 // unlock rule while locked), confirm → select {mode, ch, map}. Esc steps back one panel at a time.
 // 戰績 → the records wall (every chapter and trial × every officer: best rank and a pip per tier cleared, the count
-// cleared, what is still locked and how to open it) · 操作說明 → controls panel (both: Esc back).
+// cleared, what is still locked and how to open it) · 操作도움말 → controls panel (both: Esc back).
 // Mouse: hover highlights an item, click activates it.
 // Screen contract: createTitle(el, flow) → { enter(ctx), exit(), view } (src/main.js header). ctx.ch (result 繼續 after
 // a win, with ctx.mode): open straight on that mode's panel, focused on that chapter / trial.
@@ -39,28 +39,28 @@ export const SWASH = `<svg class="swash" viewBox="0 0 400 26" preserveAspectRati
   S352 11 397 5L395 9C368 15 330 17 280 18C226 19 170 17 128 19C84 21 38 22 3 15ZM300 20C330 19 360 17 384 14L382 16C356 20 326 22 300 20Z"/></svg>`;
 
 const ITEMS = [
-  { go: 'story', zh: '劇情模式', en: 'Story · the Shu campaign' },
-  { go: 'trial', zh: '演武試煉', en: 'Trials · free battle' },
-  { go: 'rec', zh: '戰績', en: 'Records' },
-  { go: 'ctl', zh: '操作說明', en: 'Controls' },
+  { go: 'story', zh: '이야기 모드', en: 'Story · the Shu campaign' },
+  { go: 'trial', zh: '무예 시련', en: 'Trials · free battle' },
+  { go: 'rec', zh: '전적', en: 'Records' },
+  { go: 'ctl', zh: '조작 설명', en: 'Controls' },
 ];
 // the trial panel's last entry: not a trial (no records, no map of its own) — picking it opens the battlefield list
-const FREE = { CH: { id: 'free', num: { zh: '無盡', en: 'ENDLESS' }, title: { zh: '自由演武', en: 'Free Battle' }, seal: '無盡',
-  rule: { zh: '任選武將與戰場，無盡鏖戰，不計戰績', en: 'Any officer, any field, endless waves. No records kept.' } } };
+const FREE = { CH: { id: 'free', num: { zh: '무한', en: 'ENDLESS' }, title: { zh: '자유 전투', en: 'Free Battle' }, seal: '무한',
+  rule: { zh: '장수와 전장을 골라 끝없이 싸웁니다. 전적은 기록하지 않습니다.', en: 'Any officer, any field, endless waves. No records kept.' } } };
 const LISTS = { story: CHAPTERS, trial: [...TRIALS, FREE], free: CHAPTERS };   // what the chapter panel lists per mode
 const mmss = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 const rk = (r) => (r ? `<i class="t-rk r${r}">${r}</i>` : '');                    // a rank as a ringed brush letter
 export const CONTROLS = [   // also the pause menu's table (main.js)
-  ['移動', 'Move', '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / arrows', 'left stick'],
-  ['攻擊', 'Attack', '<kbd>J</kbd> / left click — tap for the full combo', '<kbd>X</kbd> □'],
-  ['蓄力', 'Charge', '<kbd>K</kbd> / right click — mid-combo for charge attacks', '<kbd>Y</kbd> △'],
-  ['跳躍', 'Jump', '<kbd>Space</kbd>', '<kbd>A</kbd> ×'],
-  ['閃避', 'Dodge', '<kbd>L</kbd> / <kbd>Shift</kbd>', '<kbd>R1</kbd> <kbd>R2</kbd>'],
-  ['無雙', 'Musou', '<kbd>I</kbd> — when the gold gauge is full', '<kbd>B</kbd> ○'],
-  ['視角', 'Camera', 'mouse (click the field to lock it) / <kbd>Q</kbd><kbd>E</kbd>', 'right stick'],
-  ['鎖定', 'Recenter', '<kbd>R</kbd> — behind you, or onto the nearest officer', '<kbd>L1</kbd> <kbd>L2</kbd>'],
-  ['瞄準', 'Aim (黃忠)', 'hold <kbd>K</kbd> / right click (standing or running) — mouse or stick aims, release to loose', 'hold <kbd>Y</kbd> △'],
-  ['暫停', 'Pause', '<kbd>Esc</kbd> (also frees the mouse)', ''],
+  ['이동', 'Move', '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / 방향키', '왼쪽 스틱'],
+  ['공격', 'Attack', '<kbd>J</kbd> / 왼쪽 클릭 · 연타하면 연속 공격', '<kbd>X</kbd> □'],
+  ['차지', 'Charge', '<kbd>K</kbd> / 오른쪽 클릭 · 연속 공격 중 차지', '<kbd>Y</kbd> △'],
+  ['점프', 'Jump', '<kbd>Space</kbd>', '<kbd>A</kbd> ×'],
+  ['회피', 'Dodge', '<kbd>L</kbd> / <kbd>Shift</kbd>', '<kbd>R1</kbd> <kbd>R2</kbd>'],
+  ['무쌍', 'Musou', '<kbd>I</kbd> · 금색 게이지가 가득 찼을 때', '<kbd>B</kbd> ○'],
+  ['시점', 'Camera', '마우스 (전장 클릭으로 고정) / <kbd>Q</kbd><kbd>E</kbd>', '오른쪽 스틱'],
+  ['시점 맞추기', 'Recenter', '<kbd>R</kbd> · 정면 또는 가까운 적장에게 맞추기', '<kbd>L1</kbd> <kbd>L2</kbd>'],
+  ['조준', 'Aim (황충)', '<kbd>K</kbd> / 오른쪽 클릭을 길게 눌러 조준, 놓으면 발사', '<kbd>Y</kbd> 길게 누르기 △'],
+  ['일시정지', 'Pause', '<kbd>Esc</kbd> (마우스 고정 해제)', ''],
 ];
 
 // ---- key-art stage. Frame: origin at the HOME map's def.stage.title point (定軍山: up its pass road, north of the idle
@@ -103,20 +103,20 @@ export function createTitle(el, flow) {
     <div class="t-veil"></div>
     ${STAGE.cast.map(({ id }) => { const c = CHARS[id]; return `<div class="t-tag" data-id="${id}"><i>${c.seal}</i><b>${c.name.zh}</b><small>${c.name.en}</small></div>`; }).join('')}
     <div class="t-band">
-      <div class="t-logo"><i class="t-seal">三國</i><h1 data-t="無雙"><span>無雙</span></h1>
+      <div class="t-logo"><i class="t-seal">삼국</i><h1 data-t="무쌍"><span>무쌍</span></h1>
         <p class="t-en"><span>VOXEL MUSOU</span></p></div>
-      <div class="t-press"><b>按任意鍵開始</b><small><kbd>Enter</kbd> Press any key</small></div>
+      <div class="t-press"><b>아무 키나 눌러 시작</b><small><kbd>Enter</kbd> Press any key</small></div>
       <nav class="t-menu t-main">${ITEMS.map((it, i) => `<button data-i="${i}" style="--i:${i}"><b>${it.zh}</b><small>${it.en}</small>${SWASH}</button>`).join('')}</nav>
       <div class="t-cpanel"><nav class="t-menu t-chs"></nav>
         <div class="t-ccard"><h3></h3><p class="t-cname"><b></b><i></i></p><p class="t-cera"></p><p class="t-cline"><b></b><small></small></p>
           <p class="t-cfoot"></p></div></div>
-      <div class="t-dpanel"><nav class="t-menu t-dif">${DIFFS.map((d, i) => `<button data-d="${i}" style="--i:${i}"><b>${d.zh}<i class="t-lk">鎖</i><i class="t-rk"></i></b><small>${d.en}</small>${SWASH}</button>`).join('')}</nav>
-        <div class="t-dcard"><h3>難度<small>Difficulty</small></h3><p class="t-dline"><b></b><small></small></p>
-          <ul class="s-stats t-dbars">${[['敵勢', 'Pressure'], ['敵將', 'Officers'], ['傷害', 'Damage']].map(([zh, en]) => `<li><b>${zh}</b><small>${en}</small><span>${'<i></i>'.repeat(5)}</span></li>`).join('')}</ul></div></div>
+      <div class="t-dpanel"><nav class="t-menu t-dif">${DIFFS.map((d, i) => `<button data-d="${i}" style="--i:${i}"><b>${d.zh}<i class="t-lk">잠김</i><i class="t-rk"></i></b><small>${d.en}</small>${SWASH}</button>`).join('')}</nav>
+        <div class="t-dcard"><h3>난이도<small>Difficulty</small></h3><p class="t-dline"><b></b><small></small></p>
+          <ul class="s-stats t-dbars">${[['적 병력', 'Pressure'], ['적장', 'Officers'], ['피해', 'Damage']].map(([zh, en]) => `<li><b>${zh}</b><small>${en}</small><span>${'<i></i>'.repeat(5)}</span></li>`).join('')}</ul></div></div>
     </div>
-    <section class="t-ctl"><h2>操作說明<small>Controls</small></h2>
+    <section class="t-ctl"><h2>조작 설명<small>Controls</small></h2>
       <table>${CONTROLS.map(([zh, en, kb, pad]) => `<tr><th>${zh}<small>${en}</small></th><td>${kb}</td><td class="pad">${pad}</td></tr>`).join('')}</table>
-      <p>Tap attack for the combo, press charge mid-combo for a finisher. Fill the gold gauge and unleash 無雙.</p></section>
+      <p>공격을 연타하고 도중에 차지로 마무리하세요. 금색 게이지가 가득 차면 무쌍을 펼칠 수 있습니다.</p></section>
     <section class="t-rec"></section>
     <footer class="ui-foot"></footer>`;
   const $ = (s) => el.querySelector(s), btns = [...el.querySelectorAll('.t-main button')], dbtns = [...el.querySelectorAll('.t-dif button')];
@@ -131,16 +131,16 @@ export function createTitle(el, flow) {
     if (!quiet) sfx('move');
   };
   const foot = () => {
-    const what = dmode ? '難度' : cmode === 'story' ? '章節' : cmode === 'trial' ? '試煉' : cmode ? '戰場' : '';
-    $('.ui-foot').innerHTML = panel ? `<span><kbd>Esc</kbd><kbd class="pad">B</kbd>返回<small>Back</small></span>`
-      : `<span><kbd>↑</kbd><kbd>↓</kbd>選擇${what}<small>Select</small></span><span><kbd>Enter</kbd><kbd class="pad">A</kbd>決定<small>Confirm</small></span>`
-        + (what ? `<span><kbd>Esc</kbd><kbd class="pad">B</kbd>返回<small>Back</small></span>` : '');
+    const what = dmode ? '난이도' : cmode === 'story' ? '장' : cmode === 'trial' ? '시련' : cmode ? '전장' : '';
+    $('.ui-foot').innerHTML = panel ? `<span><kbd>Esc</kbd><kbd class="pad">B</kbd>돌아가기<small>Back</small></span>`
+      : `<span><kbd>↑</kbd><kbd>↓</kbd>선택${what}<small>Select</small></span><span><kbd>Enter</kbd><kbd class="pad">A</kbd>확인<small>Confirm</small></span>`
+        + (what ? `<span><kbd>Esc</kbd><kbd class="pad">B</kbd>돌아가기<small>Back</small></span>` : '');
   };
   /** Why entry i of the panel's list can't be picked yet ([zh, en]), or null: a story chapter waits on the one before
    *  it, a trial on the records (progress.js UNLOCKS); battlefields are all open. */
   const lockOf = (i) => {
     const prev = CHAPTERS[i - 1]?.CH;
-    if (cmode === 'story') return chapterOpen(i) ? null : [`攻克${prev.num.zh}「${prev.title.zh}」後開啟`, `Clear ${prev.title.en} to unlock`];
+    if (cmode === 'story') return chapterOpen(i) ? null : [`완료${prev.num.zh}「${prev.title.zh}」완료 후 열림`, `Clear ${prev.title.en} to unlock`];
     return cmode === 'trial' ? locked(list[i].CH.id)?.rule ?? null : null;
   };
   // chapter panel: the card shows the focused chapter (story: era, the prologue's opening, its officers each with his
@@ -151,16 +151,16 @@ export function createTitle(el, flow) {
     ccur = i; cbtns.forEach((b, k) => b.classList.toggle('on', k === i));
     const { CH, PROLOGUE } = list[i], story = cmode === 'story', trial = cmode === 'trial', lock = lockOf(i);
     const p = PROLOGUE?.find((q) => q.cols), field = CHAPTERS.find((m) => m.CH.map === CH.map)?.CH.title;
-    const [zh, en] = lock || (story ? [p.cols.join('，'), p.en] : trial ? [CH.rule.zh, CH.rule.en] : ['任選武將，於此鏖戰', 'Any officer, endless waves on this field']);
+    const [zh, en] = lock || (story ? [p.cols.join('，'), p.en] : trial ? [CH.rule.zh, CH.rule.en] : ['장수를 골라 이 전장에서 끝없이 싸웁니다', 'Any officer, endless waves on this field']);
     $('.t-ccard').classList.toggle('lock', !!lock);
-    $('.t-ccard h3').innerHTML = cmode === 'free' ? '戰場<small>Battlefield</small>' : `${CH.num.zh}<small>${CH.num.en}</small>`;
+    $('.t-ccard h3').innerHTML = cmode === 'free' ? '전장<small>Battlefield</small>' : `${CH.num.zh}<small>${CH.num.en}</small>`;
     $('.t-cname b').textContent = CH.title.zh; $('.t-cname i').textContent = CH.seal;
-    $('.t-cera').innerHTML = !trial ? `${CH.era.zh}<small>${CH.era.en}</small>` : field ? `戰場・${field.zh}<small>${field.en}</small>` : '';
+    $('.t-cera').innerHTML = !trial ? `${CH.era.zh}<small>${CH.era.en}</small>` : field ? `전장・${field.zh}<small>${field.en}</small>` : '';
     $('.t-cline b').textContent = zh; $('.t-cline small').textContent = en;
     // foot: a chapter's officers, each with his own best rank; a trial's best record (the stat it is ranked on first)
     const who = story ? CH.heroes.filter((id) => CHARS[id]) : [], b = trial && best(CH.id);
-    $('.t-cfoot').innerHTML = who.length ? `<span>出陣<small>Officers</small></span>${who.map((id) => `<em><canvas width="20" height="20"></canvas>${CHARS[id].name.zh}${rk(best(CH.id, id)?.rank)}</em>`).join('')}`
-      : b ? `<span>最佳<small>Best</small></span>${(CH.best === 'kos' ? [`${b.kos} 擊破`, mmss(b.time)] : [mmss(b.time), `${b.kos} 擊破`]).map((t) => `<em>${t}</em>`).join('')}<strong class="r${b.rank}"><b>${b.rank}</b></strong>` : '';
+    $('.t-cfoot').innerHTML = who.length ? `<span>출전<small>Officers</small></span>${who.map((id) => `<em><canvas width="20" height="20"></canvas>${CHARS[id].name.zh}${rk(best(CH.id, id)?.rank)}</em>`).join('')}`
+      : b ? `<span>최고 기록<small>Best</small></span>${(CH.best === 'kos' ? [`${b.kos} 격파`, mmss(b.time)] : [mmss(b.time), `${b.kos} 격파`]).map((t) => `<em>${t}</em>`).join('')}<strong class="r${b.rank}"><b>${b.rank}</b></strong>` : '';
     el.querySelectorAll('.t-cfoot canvas').forEach((cv, k) => paintPortrait(cv, CHARS[who[k]]));
     if (!quiet) sfx('move');
   };
@@ -171,7 +171,7 @@ export function createTitle(el, flow) {
     if (mode) {
       const story = mode === 'story';
       list = LISTS[mode];
-      $('.t-chs').innerHTML = list.map(({ CH }, i) => `<button data-c="${i}" class="${lockOf(i) ? 'lock' : ''}" style="--i:${i}"><b>${story ? `<em>${CH.num.zh}</em>` : ''}${CH.title.zh}<i class="t-lk">鎖</i>${
+      $('.t-chs').innerHTML = list.map(({ CH }, i) => `<button data-c="${i}" class="${lockOf(i) ? 'lock' : ''}" style="--i:${i}"><b>${story ? `<em>${CH.num.zh}</em>` : ''}${CH.title.zh}<i class="t-lk">잠김</i>${
         mode === 'free' ? '' : rk(best(CH.id)?.rank)}</b><small>${story ? `${CH.num.en} · ` : ''}${CH.title.en}</small>${SWASH}</button>`).join('');
       cbtns = [...el.querySelectorAll('.t-chs button')];
       let k = list.findIndex((m) => m.CH.id === id);
@@ -192,10 +192,10 @@ export function createTitle(el, flow) {
       return `<td>${r ? rk(r) : '<i class="t-rk"></i>'}<span>${DIFFS.map((d) => `<u class="${cell?.[d.id] ? 'f' : ''}"></u>`).join('')}</span></td>`;
     }).join('')}</tr>`;
     const rows = [...CHAPTERS, ...TRIALS].map(row).join('');
-    $('.t-rec').innerHTML = `<h2>戰績<small>Records</small><em><b>${done}</b> / ${all}<small>cleared</small></em></h2>
+    $('.t-rec').innerHTML = `<h2>전적<small>Records</small><em><b>${done}</b> / ${all}<small>cleared</small></em></h2>
       <div class="t-rbody"><div><table><tr><th></th>${who.map((id) => `<td class="${locked(id) ? 'lock' : ''}"><canvas width="20" height="20"></canvas><b>${CHARS[id].name.zh}</b></td>`).join('')}</tr>${rows}</table>
       <p class="t-rleg"><span>${'<u class="f"></u>'.repeat(DIFFS.length)}</span>${DIFFS.map((d) => d.zh).join(' · ')}<small>one pip per difficulty cleared</small></p></div>
-      <ul>${UNLOCKS.map((u) => { const lk = locked(u.id); return `<li class="${lk ? '' : 'open'}"><i>${lk ? '鎖' : '開'}</i><b>${u.zh}</b><span>${lk ? u.rule[0] : '已解鎖'}<small>${lk ? u.rule[1] : `${u.en} · unlocked`}</small></span></li>`; }).join('')}</ul></div>`;
+      <ul>${UNLOCKS.map((u) => { const lk = locked(u.id); return `<li class="${lk ? '' : 'open'}"><i>${lk ? '잠김' : '개방'}</i><b>${u.zh}</b><span>${lk ? u.rule[0] : '해제됨'}<small>${lk ? u.rule[1] : `${u.en} · unlocked`}</small></span></li>`; }).join('')}</ul></div>`;
     el.querySelectorAll('.t-rec canvas').forEach((cv, k) => paintPortrait(cv, CHARS[who[k]]));
   }
   /** The overlay beside the menu: 'ctl' controls, 'rec' the records wall, null = none. */
@@ -234,7 +234,7 @@ export function createTitle(el, flow) {
       const d = DIFFS[dcur], mode = dmode, { CH } = list[cpick];
       if (!unlocked(d)) return sfx('back');
       setDifficulty(d); busy = true;
-      stamp(dbtns[dcur], '決');
+      stamp(dbtns[dcur], '확인');
       return setTimeout(() => inkWipe(() => flow.go('select', { mode, ch: CH.id, map: CH.map })), 380);
     }
     if (cmode) {
