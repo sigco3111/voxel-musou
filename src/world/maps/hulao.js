@@ -27,7 +27,7 @@ const TOWER_X = 14, TOWER_W = 9.4, TOWER_D = 11, TOWER_H = 20;   // the two 闕:
 
 export default {
   id: 'hulao',
-  name: { zh: '虎牢關', en: 'Hulao Gate' },
+  name: { zh: '호로관', en: 'Hulao Gate' },
   grid: [-120, -206, 120, 232],
   pieces: [
     { id: 'camp', rect: [-32, -176, 32, -126], h: 0, rise: 6 },
@@ -46,16 +46,16 @@ export default {
     [-32.6, WALL_Z - 3, -27.4, WALL_Z], [27.4, WALL_Z - 3, 32.6, WALL_Z],
     [-18.5, -44, -13.5, -39.5], [13.5, -44, 18.5, -39.5], [-8, -172, 8, -161]],
   zones: [
-    { id: 'camp', name: { zh: '聯軍本陣', en: 'Coalition Camp' }, x: 0, z: -151, w: 64, d: 50 },
-    { id: 'plain', name: { zh: '汜水關前', en: 'Before Sishui' }, x: 0, z: -81, w: 112, d: 94 },
-    { id: 'gorge', name: { zh: '峽谷', en: 'The Gorge' }, x: 0, z: 22, w: 56, d: 112 },
-    { id: 'fore', name: { zh: '關前', en: 'Gate Forecourt' }, x: 0, z: 106, w: 68, d: 56 },
-    { id: 'yard', name: { zh: '虎牢關', en: 'Hulao Gate' }, x: 0, z: 158, w: 32, d: 24 },
+    { id: 'camp', name: { zh: '연합군 본진', en: 'Coalition Camp' }, x: 0, z: -151, w: 64, d: 50 },
+    { id: 'plain', name: { zh: '사수관 앞', en: 'Before Sishui' }, x: 0, z: -81, w: 112, d: 94 },
+    { id: 'gorge', name: { zh: '협곡', en: 'The Gorge' }, x: 0, z: 22, w: 56, d: 112 },
+    { id: 'fore', name: { zh: '관문 앞', en: 'Gate Forecourt' }, x: 0, z: 106, w: 68, d: 56 },
+    { id: 'yard', name: { zh: '호로관', en: 'Hulao Gate' }, x: 0, z: 158, w: 32, d: 24 },
   ],
   route: [[0, -168], [0, -126], [0, -90], [0, -46], [-5, -18], [4, 8], [1, 32], [3, 50], [2, 62], [0, 80], [0, 110], [0, WALL_Z], [0, 160]],
   gates: {
-    gorge: { rect: [-12, 58.5, 16, 61.5], name: { zh: '峽谷柵', en: 'Gorge Barricade' }, kind: 'barricade', at: [2, 60, 0, 9.5] },
-    hulao: { rect: [-7, WALL_Z - 2, 7, WALL_Z + 2], name: { zh: '虎牢關門', en: 'Hulao Gate' }, kind: 'doors' },
+    gorge: { rect: [-12, 58.5, 16, 61.5], name: { zh: '협곡 방책', en: 'Gorge Barricade' }, kind: 'barricade', at: [2, 60, 0, 9.5] },
+    hulao: { rect: [-7, WALL_Z - 2, 7, WALL_Z + 2], name: { zh: '호로관 문', en: 'Hulao Gate' }, kind: 'doors' },
   },
   anchors: { hulao: [0, WALL_Z], wine: [-10, -148], outworks: [0, -46] },
   // story: at the head of the coalition van inside the camp gate, the plain and the far gorge through it; free: the plain
@@ -310,7 +310,7 @@ export default {
       const g = c.getContext('2d');
       g.fillStyle = '#1a1210'; g.fillRect(0, 0, 512, 176); g.strokeStyle = '#b08a40'; g.lineWidth = 14; g.strokeRect(10, 10, 492, 156);
       g.fillStyle = '#e0bc68'; g.font = 'bold 118px "Kaiti SC","STKaiti","KaiTi","Songti SC",serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
-      g.fillText('虎牢關', 256, 94);
+      g.fillText('호로관', 256, 94);
       const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
       const m = new THREE.Mesh(new THREE.PlaneGeometry(5.2, 1.8), new THREE.MeshStandardMaterial({ map: tex, emissiveMap: tex, emissive: 0xffffff, emissiveIntensity: 0.15, roughness: 0.7 }));
       m.position.set(0, FORE_H + GATE_H + 2.6, fAt(FORE_H + GATE_H + 2.6) - 0.12); m.rotation.y = Math.PI;
