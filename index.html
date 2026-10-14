@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:,">
-<title>趙雲 — Voxel Musou</title>
+<title>복셀 무쌍 - Voxel Musou</title>
 <script type="importmap">
 { "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/addons/" } }
 </script>
@@ -14,8 +14,8 @@
 
   /* ---- HUD (owned by the hud part). DW8 layout, concept calligraphy. 1rem = 1/72 viewport height (10 px @720p). ---- */
   html { font-size: calc(100vh / 72); }
-  :root { --brush: "Xingkai SC", "STXingkai", "HudBrush", serif; --kai: "Kaiti SC", "STKaiti", "KaiTi", "HudBrush", serif;
-    --sans: "Avenir Next", "Helvetica Neue", sans-serif; }
+  :root { --brush: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", "Xingkai SC", "STXingkai", "HudBrush", serif; --kai: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", "Kaiti SC", "STKaiti", "KaiTi", "HudBrush", serif;
+    --sans: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", "Avenir Next", "Helvetica Neue", sans-serif; }
   /* Portable brush fallback for machines without the macOS Xingkai/Kaiti assets: Yuji Boku (SIL OFL 1.1, Kinuta Font
      Factory), subset to the HUD's glyphs (src/ui/brush.woff2). Only fetched when the fonts before it are missing.
      When you add HUD text with new CJK characters, re-subset (Google Fonts css2?family=Yuji+Boku&text=...). */
@@ -926,12 +926,12 @@
 <canvas id="c"></canvas>
 <div id="hud" hidden></div>
 <div id="menu" hidden>
-  <div class="t">趙雲<i>常山</i></div>
+  <div class="t">조운<i>상산</i></div>
   <div class="en" style="--d:.04s">VOXEL MUSOU</div>
-  <div class="sub" style="--d:.08s">戰局暫停<small>Battle paused</small></div>
-  <button id="go" style="--d:.14s">繼續<small>Resume</small></button>
-  <button id="quit" style="--d:.18s">撤退<small>Quit to title</small></button>
-  <div class="hint" style="--d:.22s"><kbd>↑</kbd><kbd>↓</kbd> 選擇 Select · <kbd>Enter</kbd><kbd class="pad">A</kbd> 決定 Confirm · <kbd>Esc</kbd><kbd class="pad">B</kbd> 繼續 Resume</div>
+  <div class="sub" style="--d:.08s">전투 일시정지<small>Battle paused</small></div>
+  <button id="go" style="--d:.14s">계속<small>Resume</small></button>
+  <button id="quit" style="--d:.18s">철수<small>Quit to title</small></button>
+  <div class="hint" style="--d:.22s"><kbd>↑</kbd><kbd>↓</kbd> 선택 Select · <kbd>Enter</kbd><kbd class="pad">A</kbd> 확인 Confirm · <kbd>Esc</kbd><kbd class="pad">B</kbd> 계속 Resume</div>
 </div>
 <!-- flow screens (main.js). ui lane: #title #select · story lane: #prologue #result -->
 <div id="title" class="scr" hidden></div>
@@ -940,13 +940,13 @@
 <div id="prologue" class="scr" hidden></div>
 <div id="result" class="scr" hidden></div>
 <div id="ink" class="boot"><div class="ink-wait"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" stroke-width="2.6" stroke-dasharray="120 163"/>
-  <circle cx="50" cy="50" r="41" stroke-width="1.2" stroke-dasharray="36 222" stroke-dashoffset="-150" opacity=".6"/></svg><i>無雙</i></div></div>
+  <circle cx="50" cy="50" r="41" stroke-width="1.2" stroke-dasharray="36 222" stroke-dashoffset="-150" opacity=".6"/></svg><i>무쌍</i></div></div>
 <script>
   // boot failure (a module that 404s or won't link, e.g. a stale cached copy next to fresh ones): the page opens under the
   // ink and only main.js lifts it, so say what happened instead of turning the seal forever
   addEventListener('error', () => {
     const w = document.querySelector('#ink.boot .ink-wait');
-    if (w) w.innerHTML = '<p>載入失敗<small>Failed to load · force-reload (Ctrl/Cmd+Shift+R)</small></p>';
+    if (w) w.innerHTML = '<p>불러오기 실패<small>Failed to load · force-reload (Ctrl/Cmd+Shift+R)</small></p>';
   }, true);
 </script>
 <script type="module" src="./src/main.js"></script>
