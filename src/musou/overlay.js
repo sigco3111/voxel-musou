@@ -24,7 +24,7 @@ export function createOverlay({ sub, seal, css }) {
   document.head.appendChild(style);
   const cutEl = document.createElement('div');
   cutEl.className = 'mu-cut';
-  cutEl.innerHTML = `<div class="sub">${sub}</div><div class="big">無雙</div><div class="seal">${seal}</div>`;
+  cutEl.innerHTML = `<div class="sub">${sub}</div><div class="big">무쌍</div><div class="seal">${seal}</div>`;
   document.body.appendChild(cutEl);
   const [cutSub, cutBig, cutSeal] = cutEl.children;
   const setStyle = (el, k, v) => { if (el.style[k] !== v) el.style[k] = v; };
