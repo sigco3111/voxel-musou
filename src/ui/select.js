@@ -2,7 +2,7 @@
 // model (kit.model on its own rig, idle clip, cloth/hair chains) stands at the foot of the pass on the right third of the frame,
 // backlit by the low sun, a warm firelight key on his front (world.js stage-key), the field behind in deep bokeh (post.js DoF focused on him), slow turntable, a spin-in on
 // every focus change and warm dust motes drifting through the light. Left: the focused officer's faction banner
-// (CHARS[id].side {zh, en}, default 蜀 Shu Han) over a compact roster (a row per officer: pixel portrait, brush name,
+// (CHARS[id].side {zh, en}, default 촉 Shu Han) over a compact roster (a row per officer: pixel portrait, brush name,
 // romanisation, seal; up to 7 fit), the info panel (brush name, courtesy name, epithet, weapon, bio, 攻/防/速/射程 bars,
 // Musou name) and the intro line as vertical calligraphy beside the model. All data comes from CHARS / CHAR_ORDER
 // (src/chars/index.js), nothing per-hero. Roster: the chapter's CH.heroes (story), else CHAR_ORDER (trial / free; ids
@@ -27,19 +27,19 @@ import { best, locked } from '../core/progress.js';
 import { chapter } from '../story/chapters.js';
 import { dotTex, scatter, stagePoint, standOfficer, poseOfficer } from './stage.js';
 
-const STATS = [['atk', '攻', 'Attack'], ['def', '防', 'Defence'], ['speed', '速', 'Speed'], ['range', '射程', 'Reach']];
+const STATS = [['atk', '공격', 'Attack'], ['def', '방어', 'Defence'], ['speed', '속도', 'Speed'], ['range', '사거리', 'Reach']];
 // stage framing: officer ≈ 6.3 m from the lens, 30° vFOV (full body + headroom), aim shifted so he stands at x ≈ 75 %
 // (clear of the info column, which ends at ≈ 60 %)
 const STAGE = { dist: 6.3, eye: 1.2, aim: 1.05, fov: 30, screenX: 0.5, face: Math.PI - 0.38, sway: 0.28, spin: 1.35, motes: 110 };
 // key-art frame (snapshot for the loading card / result, main.js snapArt): closer, knees up, the title's held pose
 const KEYART = { dist: 4.3, eye: 1.35, aim: 1.3, screenX: 0.42 };
-const ALL = CHAR_ORDER.filter((id) => CHARS[id]), SHU = { zh: '蜀', en: 'Shu Han' };
+const ALL = CHAR_ORDER.filter((id) => CHARS[id]), SHU = { zh: '촉', en: 'Shu Han' };
 const mmss = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
 export function createSelect(el, flow) {
   el.innerHTML = `
     <div class="s-veil"></div>
-    <header class="s-head"><h2>選擇武將</h2><small>Choose your officer</small><span class="s-mode"><b></b><small></small></span></header>
+    <header class="s-head"><h2>장수 선택</h2><small>Choose your officer</small><span class="s-mode"><b></b><small></small></span></header>
     <aside class="s-roster"><div class="s-fac"><i></i><small></small></div>
       ${ALL.map((id) => { const c = CHARS[id]; return `<button class="s-card" data-id="${id}" style="--acc:${c.accent}" title="${c.name.en} — double-click to deploy">
         <canvas width="20" height="20"></canvas><b>${c.name.zh}</b><small>${c.name.en}</small><i>${c.seal}</i><em class="t-rk"></em></button>`; }).join('')}
@@ -48,17 +48,17 @@ export function createSelect(el, flow) {
       <div class="s-name"><h1></h1><div><i class="s-seal"></i><p class="s-court"></p></div></div>
       <p class="s-en"></p>
       <p class="s-epi"><b></b><small></small></p>
-      <p class="s-wpn"><span>武器</span><b></b><small></small></p>
+      <p class="s-wpn"><span>무기</span><b></b><small></small></p>
       <p class="s-bio"></p>
       <ul class="s-stats">${STATS.map(([k, zh, en]) => `<li data-k="${k}"><b>${zh}</b><small>${en}</small><span>${[0, 1, 2, 3, 4].map((j) => `<i style="--i:${j}"></i>`).join('')}</span></li>`).join('')}</ul>
-      <div class="s-musou"><span>無雙亂舞</span><b></b><small></small>${SWASH}</div>
+      <div class="s-musou"><span>무쌍난무</span><b></b><small></small>${SWASH}</div>
     </article>
     <div class="s-line"><p></p><small></small></div>
-    <p class="s-rec"><span>戰績</span><b></b><small></small></p>
-    <div class="s-act"><button class="s-back"><b>返回</b><small>Back</small></button><button class="s-go"><b>出陣</b><small>To battle</small></button></div>
-    <footer class="ui-foot"><span><kbd>↑</kbd><kbd>↓</kbd>切換武將<small>Officer</small></span><span><kbd>Click</kbd>選擇<small>Select</small></span>
-      <span><kbd>Enter</kbd><kbd class="pad">A</kbd>出陣<small>Deploy</small></span><span><kbd>Esc</kbd><kbd class="pad">B</kbd>返回<small>Back</small></span>
-      <span><kbd>Drag</kbd>旋轉<small>Turn</small></span></footer>`;
+    <p class="s-rec"><span>전적</span><b></b><small></small></p>
+    <div class="s-act"><button class="s-back"><b>돌아가기</b><small>Back</small></button><button class="s-go"><b>출전</b><small>To battle</small></button></div>
+    <footer class="ui-foot"><span><kbd>↑</kbd><kbd>↓</kbd>장수 변경<small>Officer</small></span><span><kbd>Click</kbd>선택<small>Select</small></span>
+      <span><kbd>Enter</kbd><kbd class="pad">A</kbd>출전<small>Deploy</small></span><span><kbd>Esc</kbd><kbd class="pad">B</kbd>돌아가기<small>Back</small></span>
+      <span><kbd>Drag</kbd>회전<small>Turn</small></span></footer>`;
   const $ = (s) => el.querySelector(s), cards = {};
   for (const b of el.querySelectorAll('.s-card')) { cards[b.dataset.id] = b; paintPortrait(b.querySelector('canvas'), CHARS[b.dataset.id]); }
   let ctx = {}, ids = ALL, cur = ALL[0], busy = false, spinT = 0;   // ids: this visit's roster; cur: the focused id
@@ -76,7 +76,7 @@ export function createSelect(el, flow) {
     $('.s-fac i').textContent = side.zh; $('.s-fac small').textContent = side.en;
     $('.s-name h1').textContent = c.name.zh;
     $('.s-seal').textContent = c.seal;
-    $('.s-court').textContent = `字${c.courtesy.zh}`;
+    $('.s-court').textContent = `자 ${c.courtesy.zh}`;
     $('.s-en').textContent = `${c.name.en} · ${c.courtesy.en}`;
     $('.s-epi b').textContent = c.title.zh; $('.s-epi small').textContent = c.title.en;
     $('.s-wpn b').textContent = c.weapon.zh; $('.s-wpn small').textContent = c.weapon.en;
@@ -89,10 +89,10 @@ export function createSelect(el, flow) {
     $('.s-line p').textContent = c.lines.intro.zh; $('.s-line small').textContent = c.lines.intro.en;
     // the line above the info: his unlock rule while locked, else his record here at this difficulty
     const lk = locked(id), d = difficulty(), r = ctx.mode !== 'free' && best(ctx.ch, id, d.id);
-    const [zh, en] = lk ? lk.rule : r ? [`評價 ${r.rank}・${mmss(r.time)}・${r.kos} 擊破`, `Best on ${d.en}`] : ['尚無戰績', `No record on ${d.en} yet`];
+    const [zh, en] = lk ? lk.rule : r ? [`평가 ${r.rank}・${mmss(r.time)}・${r.kos} 격파`, `Best on ${d.en}`] : ['전적 없음', `No record on ${d.en} yet`];
     $('.s-rec').hidden = !lk && ctx.mode === 'free';
     $('.s-rec').classList.toggle('lock', !!lk); $('.s-go').classList.toggle('lock', !!lk);
-    $('.s-rec span').textContent = lk ? '未解鎖' : '戰績'; $('.s-rec b').textContent = zh; $('.s-rec small').textContent = en;
+    $('.s-rec span').textContent = lk ? '잠김' : '전적'; $('.s-rec b').textContent = zh; $('.s-rec small').textContent = en;
     $('.s-info').scrollTop = 0;
     replay(el, 'swap');                                    // name ink-in, stat bars refill, voice line brush reveal
     spinT = 0;
@@ -104,7 +104,7 @@ export function createSelect(el, flow) {
     if (wiping()) return afterWipe(go);             // pressed while this screen is still being uncovered: queued
     if (locked(cur)) return sfx('back');
     busy = true;
-    stamp($('.s-act'), '出陣');
+    stamp($('.s-act'), '출전');
     const id = cur;
     setTimeout(() => inkWipe(() => flow.go('loading', { mode: ctx.mode, ch: ctx.ch, map: ctx.map, char: id })), 520);
   };
@@ -204,7 +204,7 @@ export function createSelect(el, flow) {
       for (const id in cards) {                             // 鎖 on a locked officer, else his best rank here on this tier
         const lk = !!locked(id), r = (!lk && c.mode !== 'free' && best(c.ch, id, d.id)?.rank) || '', chip = cards[id].querySelector('.t-rk');
         cards[id].hidden = !ids.includes(id); cards[id].classList.toggle('lock', lk);
-        chip.textContent = lk ? '鎖' : r; chip.className = `t-rk r${r}`;
+        chip.textContent = lk ? '잠김' : r; chip.className = `t-rk r${r}`;
       }
       if (!ids.includes(cur)) { cards[cur].classList.remove('on'); cur = ids[0]; }
       show(ids.indexOf(cur), true); replay(el, 'in');       // header, roster and actions slide in as the ink uncovers
