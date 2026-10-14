@@ -1,266 +1,136 @@
-<h1 align="center">Voxel Musou</h1>
+# 복셀 무쌍 (Voxel Musou) 한국어판
 
-<p align="center"><b>一騎當千 · One warrior. A thousand foes.</b></p>
+삼국지 장수로 수백 명의 병사를 상대하는 브라우저 복셀 액션 게임입니다. [mike007jd/voxel-musou](https://github.com/mike007jd/voxel-musou)의 한국어 포크이며, 최신 원본은 **장수 7명, 이야기 4장, 시련 3개, 난이도 4단계**를 제공합니다.
 
-<p align="center">A voxel action game inspired by Dynasty Warriors.<br>Seven officers, four historical chapters and three ranked trials — playable in your browser.</p>
+![원작 소개 영상](media/promo.gif)
 
-<p align="center">
-  <a href="https://voxel-musou.vercel.app"><img src="media/promo.gif" alt="Voxel Musou trailer: seven officers, four chapters, three trials" width="100%"></a>
-</p>
+## 한국어판 변경 사항
 
-<p align="center">
-  <b><a href="https://voxel-musou.vercel.app">▶ Play now</a></b>
-  &nbsp; · &nbsp;
-  <a href="media/promo.mp4">Watch trailer with sound</a>
-  &nbsp; · &nbsp;
-  <a href="#run">Run locally</a>
-</p>
+- 제목·메뉴·조작 안내·장수 선택·로딩·HUD·일시정지·전적·결과 화면 한국어화
+- 장수 이름, 자, 무기, 소개, 무쌍 이름과 대사 번역
+- 호로관·장판파·적벽·정군산의 목표, 대화, 전장 알림, 지도와 도입부·결말 번역
+- 시련 규칙과 목표, 난이도·해금 조건 번역
+- 한글 시스템 글꼴 우선 적용. 원작의 영문 보조 표기와 장수 인장·군기 한자는 유지합니다.
+- 원본 문서는 [README.en.md](README.en.md)에 그대로 보존합니다.
+- 테스트에서 중국어 화면 문구를 검사하던 부분만 한국어에 맞췄습니다. 전투 로직과 해금 조건은 변경하지 않았습니다.
 
-<p align="center"><b>7 officers</b> &nbsp; / &nbsp; <b>4 chapters</b> &nbsp; / &nbsp; <b>3 trials</b> &nbsp; / &nbsp; <b>4 difficulties</b></p>
+## 장수와 무쌍
 
-<p align="center">
-  <a href="#officers">Officers</a> &nbsp; · &nbsp;
-  <a href="#story-campaign">Campaign</a> &nbsp; · &nbsp;
-  <a href="#trials-and-free-battle">Trials</a> &nbsp; · &nbsp;
-  <a href="#difficulty-records-and-saves">Progression</a> &nbsp; · &nbsp;
-  <a href="#controls">Controls</a> &nbsp; · &nbsp;
-  <a href="#development">Development</a>
-</p>
+| 장수 | 무기·전투 방식 | 무쌍 |
+|---|---|---|
+| 유비 | 쌍고검 | 소열 · 쌍룡참 |
+| 관우 | 청룡언월도 | 청룡언월 · 천참 |
+| 장비 | 장팔사모 | 연인포효 |
+| 조운 | 용담창, 휩쓰는 차지 공격 | 창룡파진 |
+| 제갈량 | 백우선, 바람 칼날과 진법 | 동풍 · 팔진 |
+| 황충 | 근접 활 공격·화살비·화염 화살·수동 조준 | 백보천양 |
+| 여포 | 방천화극과 파동 공격 | 천하무쌍 · 신귀난무 |
 
----
+처음에는 6명을 선택할 수 있습니다. **제1장 완료 후 여포가 해제**됩니다. 이야기 모드에서는 각 장의 지정 장수만 출전하며, 시련과 자유 전투에서는 해제한 장수를 고를 수 있습니다.
 
-## Features
+## 이야기 모드
 
-Built with **Three.js r186** and a **fixed 60 Hz simulation**. Plain ES modules, with no package installation or build step needed to play locally.
+| 장 | 출전 장수 | 주요 전투 |
+|---|---|---|
+| 제1장 호로관 (190년) | 유비·관우·장비 | 화웅과 결투, 삼형제와 여포의 싸움 |
+| 제2장 장판파 (208년) | 조운·장비 | 아두 구출과 귀환, 장판교 방어·단교 |
+| 제3장 적벽 (208년) | 제갈량·조운 | 칠성단 방어, 동풍, 연환선 화공, 조조 추격 |
+| 제4장 정군산 (219년) | 황충·조운 | 산길 돌파와 하후연 격파 |
 
-- Officer-specific voxel models, N1–N6 normal strings, C1–C6 charge attacks, air attacks, dodges and scripted Musou sequences.
-- Story objectives include duels, rescues, defence points, pursuit and battlefield set pieces, with officer-specific dialogue and endings.
-- Hundreds of instanced soldiers, allied troops, army-specific colours and banners, voxel debris, hit-stop and impact effects.
-- Enemy officers and allied hero NPCs with name and HP tags; Cao Cao, Zhang Liao and Xiahou Yuan have dedicated boss models and telegraphed attacks.
-- Four fields: daylight Hulao Gate, dusk at Changban, the Red Cliffs night fleet and the golden-hour Mount Dingjun valley, switching within the same page.
-- Atmospheric haze, depth of field, bloom, a retro pixel look and automatic MSAA quality reduction under sustained load.
-- Procedural WebAudio sound, Chinese / English screen text, brush calligraphy, ink-map prologues and ink-wipe transitions.
+이전 장을 어느 난이도·지정 장수로든 완료하면 다음 장이 열립니다. 목표 패널, 방향 표시와 미니맵을 따라가세요. 장수가 쓰러지거나 방어 목표가 무너지면 패배할 수 있습니다. 고기만두는 체력을 회복합니다.
 
-<table>
-  <tr>
-    <td width="50%" align="center">
-      <img src="media/title.jpg" alt="Voxel Musou title screen" width="100%"><br>
-      <b>Voxel Musou</b><br><sub>Brush calligraphy, voxel officers and a living battlefield</sub>
-    </td>
-    <td width="50%" align="center">
-      <img src="media/select.jpg" alt="Seven officers on the character select screen" width="100%"><br>
-      <b>Choose your officer</b><br><sub>Distinct weapons, fighting styles and personal records</sub>
-    </td>
-  </tr>
-</table>
+도입부는 수묵 지도와 세로 글로 표시됩니다. Enter·Space·클릭으로 다음 페이지, 길게 누르거나 Esc로 건너뛸 수 있습니다. 대사는 삼국지연의풍 원작의 내용이며 역사 교재가 아닙니다.
 
-## Officers
+## 시련과 자유 전투
 
-<table>
-  <tr>
-    <td width="50%" align="center">
-      <img src="media/guanyu.jpg" alt="Guan Yu's Musou at Mount Dingjun" width="100%"><br>
-      <b>關羽 · Guan Yu</b><br><sub>青龍偃月・天斬</sub>
-    </td>
-    <td width="50%" align="center">
-      <img src="media/zhaoyun.jpg" alt="Zhao Yun's Musou at Changban" width="100%"><br>
-      <b>趙雲 · Zhao Yun</b><br><sub>蒼龍破陣</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" align="center">
-      <img src="media/zhugeliang.jpg" alt="Zhuge Liang's Musou at the Red Cliffs" width="100%"><br>
-      <b>諸葛亮 · Zhuge Liang</b><br><sub>東風・八陣</sub>
-    </td>
-    <td width="50%" align="center">
-      <img src="media/lubu.jpg" alt="Lü Bu's Musou at Hulao Gate" width="100%"><br>
-      <b>呂布 · Lü Bu</b><br><sub>天下無雙・神鬼亂舞</sub>
-    </td>
-  </tr>
-</table>
+| 시련 | 목표 | 해금 |
+|---|---|---|
+| 천인참 | 3분 안에 병사 1,000명 격파 | 처음부터 |
+| 사수 | 장판교를 4분 동안 방어 | 제2장 완료 |
+| 연속 결투 | 하후연·장료·조조·여포를 차례로 격파 | 제4장 완료 |
 
-| Officer | Weapon and fighting style | Musou |
-| --- | --- | --- |
-| **Liu Bei** (劉備) | Twin swords | 昭烈・雙龍斬 |
-| **Guan Yu** (關羽) | Green Dragon Crescent Blade | 青龍偃月・天斬 |
-| **Zhang Fei** (張飛) | Serpent spear | 燕人咆哮 |
-| **Zhao Yun** (趙雲) | Spear strings and sweeping charges | 蒼龍破陣 — a dragon tears through the crowd |
-| **Zhuge Liang** (諸葛亮) | Feather fan, wind blades and formation sigils | 東風・八陣 |
-| **Huang Zhong** (黃忠) | Bow slashes, point-blank shots, fan shots, barrages, arrow rain, fire arrows and manual aim | 百步穿楊 — flaming volley and a giant arrow |
-| **Lü Bu** (呂布) | Crescent halberd and crescent waves; also the Hulao Gate boss | 天下無雙・神鬼亂舞 |
+빠른 완료·많은 격파와 적은 피해가 좋은 평가로 이어집니다. 시련 목록 끝의 **자유 전투**는 네 전장에서 무한 웨이브를 즐기는 모드입니다. 자유 전투에서는 장수가 죽지 않으며, 완료 전적이나 해금을 얻지 않습니다.
 
-Six officers are available initially; Lü Bu unlocks after clearing Chapter I. Story chapters use the roster below; trials and free battle offer every unlocked officer.
+## 난이도와 저장
 
-## Story campaign
+| 난이도 | 선택 조건 | 최고 평가 |
+|---|---|---|
+| 쉬움 | 처음부터 | A |
+| 보통 | 처음부터 | S |
+| 어려움 | 처음부터 | S |
+| 수라 | 어려움으로 이야기 또는 시련 완료 | S |
 
-Choose **Story (劇情模式)** on the title screen, then a chapter, difficulty and officer. Chapters unlock in order when the preceding chapter is cleared, with any of its officers on any difficulty.
+높은 난이도에서는 적 병력, 적장 체력, 받는 피해가 증가합니다. 수라의 적장은 가벼운 공격에 쉽게 경직되지 않습니다.
 
-<p align="center">
-  <img src="media/story.jpg" alt="Chapter I Hulao Gate ink-map prologue" width="100%"><br>
-  <sub>虎牢關 · Chapter I opens with an animated ink-map prologue</sub>
-</p>
+최고 평가·최단 시간·최다 격파 수는 장/시련 × 장수 × 난이도별로 각각 저장됩니다. 브라우저 `localStorage`에 자동 저장하며, 현재 진행 중인 전투는 저장하지 않습니다. 저장은 브라우저와 사이트 주소별로 분리되므로 원작 사이트 기록은 이 포크로 자동 이동하지 않습니다. 사이트 데이터를 삭제하면 기록도 사라집니다.
 
-| Chapter | Playable officers | Battle |
-| --- | --- | --- |
-| **I · Hulao Gate** (虎牢關, 190) | Liu Bei, Guan Yu, Zhang Fei | Guan Yu's timed Hua Xiong duel and the three brothers against Lü Bu |
-| **II · Changban** (長坂坡, 208) | Zhao Yun, Zhang Fei | Rescue A Dou and return as Zhao Yun; hold and break the bridge as Zhang Fei |
-| **III · Red Cliffs** (赤壁, 208) | Zhuge Liang, Zhao Yun | Defend the altar, summon the east wind, burn the chained ships and pursue Cao Cao to Huarong Road |
-| **IV · Mount Dingjun** (定軍山, 219) | Huang Zhong, Zhao Yun | Fight uphill against Xiahou Yuan |
+## 조작
 
-Follow the objective panel, its direction marker and the minimap. Story battles can end in defeat if the hero falls or an objective fails; meat buns restore HP. Results show rank, KOs, clear time, damage taken, the officer's ending and newly earned records or unlocks. Retry from the result screen to attempt the battle again.
+| 동작 | 키보드·마우스 | 게임패드 |
+|---|---|---|
+| 이동 | WASD / 방향키 | 왼쪽 스틱 |
+| 일반 공격 | J / 왼쪽 클릭 | X / □ |
+| 차지·연속 공격 마무리 | K / 오른쪽 클릭 | Y / △ |
+| 점프 | Space | A / × |
+| 회피 | L / Shift | R1 / R2 |
+| 무쌍 | 게이지가 가득 찼을 때 I | B / ○ |
+| 시점 | 마우스 / Q E | 오른쪽 스틱 |
+| 시점 정면·가까운 적장 맞추기 | R | L1 / L2 |
+| 황충 조준 | K / 오른쪽 클릭 길게, 놓으면 발사 | 원작 조작표 참고 |
+| HUD 도움말 | H | - |
+| 일시정지 | Esc | - |
 
-## Trials and free battle
+J를 반복하면 N1~N6 일반 공격을 이어갑니다. 중립 상태의 K는 C1, 일반 공격 N1~N5 뒤 K는 C2~C6입니다. 예: **J → J → K = C3**. 공중에서도 공격·차지 공격을 할 수 있습니다.
 
-Choose **Trials (演武試煉)** on the title screen for ranked challenges or **Free battle (自由演武)** at the end of that list.
+메뉴에서는 WASD/방향키로 이동, Enter/Space/J로 확인, Esc/Backspace/K로 뒤로 갑니다. 패드는 방향패드/왼쪽 스틱, A/× 확인, B/○ 뒤로입니다. 전장을 클릭하면 마우스가 고정되며 첫 고정 클릭은 공격하지 않습니다. 마우스 고정이 풀리거나 창을 떠나면 전투가 일시정지됩니다.
 
-| Trial | Goal | Unlock |
-| --- | --- | --- |
-| **Thousand Slain** (千人斬) | Defeat 1,000 soldiers within 3 minutes; faster clears improve rank | Available from the start |
-| **Hold the Bridge** (死守) | Defend Changban Bridge for 4 minutes against escalating assaults; more KOs improve rank | Clear Chapter II |
-| **The Gauntlet** (過關斬將) | Defeat Xiahou Yuan, Zhang Liao, Cao Cao and Lü Bu in sequence; faster clears improve rank | Clear Chapter IV |
+## 실행과 Pages 배포
 
-Trials can end in defeat, and damage taken also affects rank. Free battle offers endless waves on any of the four fields from the start: the hero cannot die, and no clear records or unlocks are earned there.
+**설치·빌드 없이 정적 서버로 실행**합니다. `file://`로 열면 ES 모듈을 읽을 수 없습니다.
 
-<table>
-  <tr>
-    <td width="50%" align="center">
-      <img src="media/trials.jpg" alt="Trials selection screen" width="100%"><br>
-      <b>演武試煉 · Trials</b><br><sub>Score attacks, bridge defence and four consecutive duels</sub>
-    </td>
-    <td width="50%" align="center">
-      <img src="media/records.jpg" alt="Records wall with ranks and unlock requirements" width="100%"><br>
-      <b>戰績 · Records</b><br><sub>Chase better ranks and unlock your next challenge</sub>
-    </td>
-  </tr>
-</table>
-
-## Difficulty, records and saves
-
-Pick the difficulty after selecting a chapter, trial or free-battle field. Higher tiers increase enemy pressure, officer toughness and incoming damage; Chaos also gives officers resistance to stagger from non-heavy hits.
-
-| Difficulty | Availability | Highest rank |
-| --- | --- | --- |
-| **Easy** (初級) | From the start | A |
-| **Normal** (普通) | From the start | S |
-| **Hard** (上級) | From the start | S |
-| **Chaos** (修羅) | Clear any story chapter or trial on Hard | S |
-
-Victories save the **best rank, fastest clear and most KOs independently**, for each chapter / trial × officer × difficulty. These appear on the title cards, officer select, the **Records (戰績)** wall and the result screen. Ranks run from C to S and account for KOs, time and cumulative damage taken; trials add stricter S-rank requirements.
-
-Records and the selected difficulty are saved automatically in browser `localStorage`. Unlocks are derived from clear records. Progress is specific to the browser and site origin, so localhost and the hosted game have separate saves; clearing site data resets progress. Battles themselves are not saved for later resumption.
-
-## Run
-
-ES modules don't load from `file://`, so serve the folder with any static server:
-
-```sh
+```bash
+git clone https://github.com/sigco3111/voxel-musou.git
+cd voxel-musou
 python3 -m http.server 8000
 ```
 
-Then open [localhost:8000](http://localhost:8000). Requires a WebGL2 browser; a desktop GPU is recommended. Sound starts on the first key press or click.
+브라우저에서 `http://localhost:8000`을 엽니다. WebGL 2와 데스크톱 GPU를 권장합니다. 소리는 첫 키 입력이나 클릭 후 시작됩니다. Three.js r186은 `vendor/three/`에 포함되어 있습니다.
 
-## Controls
+GitHub Pages는 `main` 브랜치의 저장소 루트(`/`)를 배포합니다. 별도 빌드 단계나 게임 서버는 필요하지 않습니다.
 
-Keyboard and mouse, or a gamepad.
+## 개발용 URL 옵션
 
-| Action | Keys | Gamepad |
-| --- | --- | --- |
-| Move (camera-relative) | WASD / arrow keys | left stick |
-| Attack | J / left click | X □ |
-| Charge / combo finisher | K / right click | Y △ |
-| Jump | Space | A × |
-| Dodge | L / Shift | R1 R2 |
-| Musou (gauge full) | I | B ○ |
-| Camera | mouse (click the field to lock it) / Q E | right stick |
-| Recenter / face nearest officer | R | L1 L2 |
-| Aim (Huang Zhong) | hold K / right click, release to loose | — |
-| Toggle HUD control hints | H | |
-| Pause / controls | Esc | |
+| 옵션 | 기능 |
+|---|---|
+| `?enemies=N` | 병사 슬롯 수 0~2000, 기본 300 |
+| `?go=free` / `story` / `trial` | 메뉴·도입부를 건너뛰고 전투 시작 |
+| `&char=ID` | liubei, guanyu, zhangfei, zhaoyun, zhugeliang, huangzhong, lubu |
+| `&ch=ID` | 이야기: hulao, changban, chibi, dingjun / 시련: slay, hold, gauntlet |
+| `&map=ID` | 자유 전장: hulao, changban, chibi, dingjun |
+| `?hq` | 자동 MSAA 품질 하향을 끄고 최고 품질 고정 |
 
-Tap attack repeatedly for N1–N6. Charge from neutral gives C1; charge after N1–N5 branches into C2–C6 (for example, **J → J → K** gives C3). Huang Zhong can hold K / right click from neutral to aim, then release to shoot; manual aim currently requires keyboard / mouse. Attack or charge while airborne performs an air attack.
+개발용 바로가기는 메뉴의 해금·출전 제한을 우회하며 저장된 난이도를 사용합니다. 시련 바로가기는 `ch`에 시련 ID를 반드시 지정하세요.
 
-Menus support WASD / arrow keys to move, Enter / Space / J to confirm and Esc / Backspace / K to go back; on a gamepad, use the d-pad / left stick, A / × to confirm and B / ○ to go back. Click the field to capture the mouse for camera control; that first capture click does not attack. Losing pointer lock or switching away from the window pauses the battle. The pause menu offers resume, controls and a confirmed return to the title.
+## 구조와 검사
 
----
+`index.html`은 진입점과 스타일, `src/main.js`는 화면 흐름과 고정 60Hz 루프입니다. `src/chars/`는 장수, `src/story/`는 캠페인·시련, `src/ui/`는 메뉴·HUD, `src/world/`는 전장, `src/combat/`는 전투 판정입니다. 렌더링과 시뮬레이션은 분리되어 있습니다.
 
-## Development
+Node.js 22.15 이상에서 다음 검사를 실행할 수 있습니다.
 
-<details>
-<summary><b>Battle shortcuts and URL options</b></summary>
-
-Add these parameters to the local URL:
-
-| URL parameter | Description |
-| --- | --- |
-| `?enemies=N` | Enemy grunt slot capacity, 0–2000 (default 300); waves reuse slots, officer and ally slots are separate |
-| `?go=free\|story\|trial` | Start directly in a battle, skipping menu selection and the story prologue |
-| `&char=ID` | Officer: `liubei`, `guanyu`, `zhangfei`, `zhaoyun`, `zhugeliang`, `huangzhong`, `lubu` (default `zhaoyun`) |
-| `&ch=ID` | Chapter: `hulao`, `changban`, `chibi`, `dingjun`; trial: `slay`, `hold`, `gauntlet` |
-| `&map=ID` | Free-battle field: `hulao`, `changban`, `chibi`, `dingjun` |
-| `?hq` | Pin full render quality (no automatic MSAA downgrade) |
-
-Examples:
-
-- [Zhao Yun at Changban](http://localhost:8000/?go=story&char=zhaoyun&ch=changban)
-- [Huang Zhong in Thousand Slain](http://localhost:8000/?go=trial&char=huangzhong&ch=slay)
-- [Lü Bu free battle at Hulao Gate](http://localhost:8000/?go=free&char=lubu&map=hulao&enemies=300)
-
-These shortcuts bypass menu unlock and roster restrictions and use the saved difficulty. For trial shortcuts, always specify a trial ID with `ch`.
-
-</details>
-
-<details>
-<summary><b>Project layout and architecture</b></summary>
-
-```text
-index.html       Entry point, importmap and screen CSS
-src/main.js      Boot, screen flow, battle reset and fixed-step loop
-src/core/        Input, events, RNG, difficulty, records and unlocks
-src/chars/       Officer registry, playable kits, models and NPC boss kits
-src/hero/        Shared rig, locomotion, animation and combo state machine
-src/combat/      Hit detection, damage and projectiles
-src/crowd/       Soldier simulation, armies and instanced rendering
-src/actors/      Boss / allied hero NPCs and healing pickups
-src/musou/       Shared Musou simulation, scripted sequences and presentation
-src/story/       Chapter / trial data, objective director, prologue and results
-src/world/       Four maps, terrain, set pieces, sky and scenery
-src/ui/          Title, officer select, loading, HUD and menu navigation
-src/camera/      Camera control and occlusion handling
-src/vfx/         Combat effects and arrow rendering
-src/post/        Post-processing and adaptive MSAA
-src/audio/       Procedural battle audio and sound bank
-vendor/three/    Vendored Three.js r186
-checks/          Node regression scripts and simulation probes
-media/           README screenshots and trailer (GIF, MP4)
+```bash
+node checks/campaign.mjs
+node checks/trials.mjs
+node checks/shared-originality.mjs
+node src/chars/check.mjs
+node src/world/changban.check.mjs
 ```
 
-Simulation and presentation are separated: gameplay advances in fixed 60 Hz steps, while render modules read simulation state. Officers share the hero / combat infrastructure through kits; story chapters and trials share a data-driven objective director.
+이 검사는 시뮬레이션과 코드 계약을 확인합니다. 브라우저 화면 검증이나 실제 전체 플레이를 대신하지 않습니다.
 
-</details>
+## 출처·라이선스·한계
 
-<details>
-<summary><b>Manual checks and simulation probes</b></summary>
-
-The repository includes checks that can be run explicitly with **Node 22.15+**; they do not require a browser or package installation:
-
-| Command | Scope |
-| --- | --- |
-| `node checks/campaign.mjs` | Chapter scripting, progression, difficulty and records regressions |
-| `node checks/campaign-walk.mjs [chapter] [hero]` | Campaign routes through the real simulation, with invulnerability and boosted damage for traversal |
-| `node checks/trials.mjs` | Trial scripting, victory / defeat conditions and S-rank gates |
-| `node checks/trials-bot.mjs [trial] [hero] [difficulty] [seed]` | Trial balance probe using input-only bots; supports `--dodge` and `--air` |
-| `node checks/shared-originality.mjs` | Shared model geometry, render commands and scripted Musou timing |
-| `node src/chars/check.mjs` | Playable / NPC kit contracts, portraits, moves, animation clips and Musou |
-| `node src/world/changban.check.mjs` | Changban bridge set pieces and terrain / walk-height consistency |
-
-These scripts cover simulation and source contracts; they do not verify browser rendering or replace playing the battles.
-
-</details>
-
-## Credits & License
-
-- Code: MIT, see [LICENSE](LICENSE).
-- [three.js](https://threejs.org/): MIT.
-- HUD fallback font `src/ui/brush.woff2` is a subset of Yuji Boku by Kinuta Font Factory, licensed under the SIL Open Font License 1.1.
-
-This is a fan project, not affiliated with or endorsed by KOEI TECMO. "Dynasty Warriors" is a trademark of KOEI TECMO. No game assets from the original games are included.
+- 원작 저장소: [mike007jd/voxel-musou](https://github.com/mike007jd/voxel-musou). 코드: **MIT**, [LICENSE](LICENSE) 원문 유지.
+- Three.js: MIT. 원작 HUD 서체 Yuji Boku: SIL Open Font License 1.1. 한국어는 시스템 한글 글꼴을 우선 사용합니다.
+- KOEI TECMO와 무관한 팬 프로젝트이며 공식 게임 에셋을 포함하지 않는다고 원작 README에 명시되어 있습니다. "Dynasty Warriors"는 KOEI TECMO의 상표입니다.
+- README 사진·영상은 원작 자료로 중국어/영어가 표시될 수 있습니다. 실제 플레이 화면의 텍스트는 한국어로 바뀝니다.
+- 모바일 터치 조작이나 모든 브라우저·게임패드의 호환성을 보장하지 않습니다. 복셀 군중·후처리 효과 때문에 GPU 부하가 있을 수 있습니다.
